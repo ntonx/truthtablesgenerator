@@ -24,14 +24,8 @@ public class TokenizerService {
 		       operandList.add(token);
 		    }
 		 }
-
-		 
-		 
-		 
-		 
 		// System.out.println("Operators:" + operatorList);
 		// System.out.println("Operands:" + operandList);
-		 
 		 return operandList.stream().distinct().collect(Collectors.toList());
 	}
 }
