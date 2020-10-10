@@ -3,12 +3,18 @@
 <head> 
     <title>Computational Mathematics</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/actions.js}"></script>
 </head>
 <body>
 	<h1>Truth tables generator</h1>
-    <form action="#" th:action="@{/}" th:object="${mystatement}" method="post">
-        <p>Write a statement: <input type="text" th:field="*{content}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+	<div class="container container-padding50">
+    <form name="form1" action="#" onsubmit="required()" th:action="@{/}" th:object="${mystatement}" method="post">
+        <p><input id="text1" type="text" th:field="*{content}" placeholder="Write a statement" class="js-userinput container-textinput" />
+        </p>
+        <div><input type="submit" value="Generate" /> 
+        <input type="reset" value="Reset" /></div>
     </form>
+    </div>
 </body>
 </html>

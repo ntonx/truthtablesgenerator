@@ -1,5 +1,6 @@
 package com.example.logicproject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,13 @@ public class LogicController {
 		model.addAttribute("mystatement", mychar);
 		
 		String expresion = mychar.content;
-    //	String expresion="a+b*c*e+f*g";
-	//	String	expresion="(p+q)*~(p*q)";
+		
+		if(expresion.isEmpty()) {
+			return "Write a statement on the box!!!";
+		}
+		
+	//	String	expresion="~(p+q)>(p>r)";//"a*(b+c)";//;"p>q";
+	//	String expresion="(a*b)>c";
 		
 		tokenService = new TokenizerService();
 		List<String>datos = tokenService.getOperands(expresion);
@@ -54,17 +60,27 @@ public class LogicController {
 		String m5 = "</td>";
 		String aux2 = "";
 		String m6="</tr>";
+		ArrayList<Integer> response = new ArrayList<>();
 		for (int[] row : res) {            
 	        for (int c : row) { 
 	        	aux2=aux2+m4+c+m5;
-	        	System.out.print(c + "\t");        
+//	        	System.out.print(c + "\t");        
 	        }
 	        aux2 = aux2+m6;
-	        System.out.println();
+//	        System.out.println();
 	    }      
 		page = page+aux2;
 		
-	  return page+htmlBuilder.getEnd();
+		for(int i=0;i<(datos.size()*datos.size())-1;i++) {
+			response.add(res[i][datos.size()]);
+		}
+		if(datos.size()==1) {
+			for(int i=0;i<=datos.size();i++) {
+				response.add(res[i][datos.size()]);
+			}
+		}
+		
+	  return page+htmlBuilder.getEnd(response);
 	}
 	
 	
@@ -73,6 +89,13 @@ public class LogicController {
 	public String statementForm(Model model) {
 		model.addAttribute("mystatement", new Statement());
 		return "index";
+	}
+		
+	
+	@GetMapping("/ejemplo")
+	public String statement(Model model) {
+		model.addAttribute("mystatement", new Statement());
+		return "index2";
 	}
 		
 }

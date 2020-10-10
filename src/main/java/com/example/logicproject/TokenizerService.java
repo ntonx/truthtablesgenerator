@@ -14,11 +14,11 @@ public class TokenizerService {
 	public List<String> getOperands(String myString) {
 		List<String> operatorList = new ArrayList<String>();
 		 List<String> operandList = new ArrayList<String>();
-		 StringTokenizer st = new StringTokenizer(myString, "+*~()", true);
+		 StringTokenizer st = new StringTokenizer(myString, "+*~()<>", true);
 		 while (st.hasMoreTokens()) {
 		    String token = st.nextToken();
 
-		    if ("+*~()".contains(token)) {
+		    if ("+*~()<>".contains(token)) {
 		       operatorList.add(token);
 		    } else {
 		       operandList.add(token);

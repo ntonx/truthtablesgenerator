@@ -26,7 +26,7 @@ public class GeneratorService {
 	    
 	    int complete [][] = new int [nbrCombinaisons][nbrVariables+1]; 
 	    boolean tt [][] = new boolean [nbrCombinaisons][nbrVariables+1];  
-	    ArrayList<int[]> mysdatos=new ArrayList<int[]>();
+//	    ArrayList<int[]> mysdatos=new ArrayList<int[]>();
 	    
 	    for (int j = 0; j < nbrCombinaisons; j++) {             
 	        String    tempStr  = String.format("%"+nbrVariables+"s", Integer.toBinaryString(j)).replace(" ", "0");
@@ -43,20 +43,44 @@ public class GeneratorService {
 	        tt[j] = tempBool;
 	    }
 
+	    int posicionuno=-1;
+	    int posicioncero=-1;
+	    
 	    for (int j = 0; j < nbrCombinaisons; j++) { 
 	    	for (int i = 0; i <boolArray.length ; i++) {
-   		 			boolArray[i]= tt[j][i];
-   		 		if(tt[j][i]==true) {intArray[i]= 1;
-   		 		}else {intArray[i]= 0;}	
+   		// 			boolArray[i]= tt[j][i];
+   		 		if(tt[j][i]==true) {
+   		 			intArray[i]= 1;
+   		 		}else {
+   		 			intArray[i]= 0;
+   		 			
+   		 		}
+   		 		
+	   		 	if(datos.contains("1")) {
+	   		 		posicionuno = datos.indexOf("1");
+		 			if(i==posicionuno) {
+		 				intArray[i]=1;
+		 			}
+			    }
+	   		 	if(datos.contains("0")) {
+	   		 		posicioncero = datos.indexOf("0");
+			    	if(i==posicioncero) {
+			    		intArray[i]=0;
+			    	}
+			    }	
 	    	}
+	    	
 	    	int[]copia = intArray;
 	    	List<String> mycadenacopia=new ArrayList<>(mycadena);
 	    	int valor = calculatePerRow(copia,mycadenacopia,datos);
+	    	//save in the final colum of each row the result of processing the row with posfix  
 	    	intArray [nbrVariables] = valor;
-	    	mysdatos.add(j,(intArray));
-			for (int i = 0; i < intArray.length; i++) {
+//	    	mysdatos.add(j,(intArray));
+			
+	    	for (int i = 0; i < intArray.length; i++) {
+	    		//build the array that contains all the processing data
 				complete[j][i] = intArray[i];
-		}
+			}
 	    	
    	 		}
 	    return complete;     
@@ -110,6 +134,18 @@ public class GeneratorService {
                 		number=0;
                 		}
                     stack.push(number);
+	            }else if(word.charAt(0)=='>') {
+	            	int number2 = stack.pop();
+	            	int number1 = stack.pop();
+	            //	int number1 = stack.pop();
+	            //	int number2 = stack.pop();
+	            	int number=0;
+                	if(number1==1&&number2==0) {
+                		number=0;
+                	}else{// if(number2==0&&number1==0||number1==0&&number2==1||number1==1&&number2==1) {
+                		number=1;
+                		}
+                    stack.push(number);
 	            }else{
 	                int number = Integer.parseInt(word);
 	                stack.push(number);
@@ -152,6 +188,18 @@ public class GeneratorService {
 	                        postFixList.add(stack.pop()+"");
 	                    }
 	                }
+	            }else if(word=='>'){
+	                flag = false;
+	                /*while(!stack.isEmpty()){
+	                    if(stack.peek()=='('){
+	                        stack.pop();
+	                        break;
+	                    }else{
+	                        postFixList.add(stack.pop()+"");
+	                    }
+	                }*/
+	                stack.push(word);
+	                flag = false;
 	            }else if(word=='+' || word=='*' || word=='~'){
 	                flag = false;
 	                if(stack.isEmpty()){
