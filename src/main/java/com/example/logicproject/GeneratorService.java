@@ -16,7 +16,9 @@ public class GeneratorService {
 	public GeneratorService() {}
 
 	public int[][] getValuesFromExpression(int nbrVariables, String expresion,List<String>datos) {
-	
+		//if there is a biconditional remove the second element > to avoid conflicts at reading
+		expresion = expresion.replaceAll("<>", "<");
+		
 		List<String> mycadena = getPostFixString(expresion);
 		System.out.println("MI EXPRESION POSFIJA:"+mycadena);
 	    
@@ -25,8 +27,7 @@ public class GeneratorService {
 	    int[] intArray = new int[nbrVariables+1];
 	    
 	    int complete [][] = new int [nbrCombinaisons][nbrVariables+1]; 
-	    boolean tt [][] = new boolean [nbrCombinaisons][nbrVariables+1];  
-//	    ArrayList<int[]> mysdatos=new ArrayList<int[]>();
+	    boolean tt [][] = new boolean [nbrCombinaisons][nbrVariables+1]; 
 	    
 	    for (int j = 0; j < nbrCombinaisons; j++) {             
 	        String    tempStr  = String.format("%"+nbrVariables+"s", Integer.toBinaryString(j)).replace(" ", "0");
@@ -75,8 +76,7 @@ public class GeneratorService {
 	    	int valor = calculatePerRow(copia,mycadenacopia,datos);
 	    	//save in the final colum of each row the result of processing the row with posfix  
 	    	intArray [nbrVariables] = valor;
-//	    	mysdatos.add(j,(intArray));
-			
+	    	
 	    	for (int i = 0; i < intArray.length; i++) {
 	    		//build the array that contains all the processing data
 				complete[j][i] = intArray[i];
@@ -144,7 +144,17 @@ public class GeneratorService {
                 		number=1;
                 		}
                     stack.push(number);
-	            }else{
+	            }else if(word.charAt(0)=='<') {
+	            	int number2 = stack.pop();
+	            	int number1 = stack.pop();
+	            	int number=0;
+                	if(number1==number2) {
+                		number=1;
+                	}else{
+                		number=0;
+                		}
+                    stack.push(number);
+                }else{
 	                int number = Integer.parseInt(word);
 	                stack.push(number);
 	            }
@@ -153,11 +163,11 @@ public class GeneratorService {
 	    }
 	
 	 private int getPreference(char c){
-	        if(c=='+') return 1;
-	        else if(c=='*') return 2;
-	        else if(c=='~') return 3;
-	        else if(c=='>') return 0;
-	        else if(c=='<') return 5;
+	        if(c=='+') return 2;
+	        else if(c=='*') return 3;
+	        else if(c=='~') return 4;
+	        else if(c=='>') return 2;
+	        else if(c=='<') return 1;
 	        else return -1;
 	    }
 	 
@@ -186,7 +196,7 @@ public class GeneratorService {
 	                        postFixList.add(stack.pop()+"");
 	                    }
 	                }
-	            }else if(word=='+' || word=='*' || word=='~'|| word=='>'){
+	            }else if(word=='+' || word=='*' || word=='~'|| word=='>'|| word=='<'){
 	                flag = false;
 	                if(stack.isEmpty()){
 	                    stack.push(word);
