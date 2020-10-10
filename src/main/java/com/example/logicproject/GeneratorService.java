@@ -137,12 +137,10 @@ public class GeneratorService {
 	            }else if(word.charAt(0)=='>') {
 	            	int number2 = stack.pop();
 	            	int number1 = stack.pop();
-	            //	int number1 = stack.pop();
-	            //	int number2 = stack.pop();
 	            	int number=0;
                 	if(number1==1&&number2==0) {
                 		number=0;
-                	}else{// if(number2==0&&number1==0||number1==0&&number2==1||number1==1&&number2==1) {
+                	}else{
                 		number=1;
                 		}
                     stack.push(number);
@@ -158,7 +156,7 @@ public class GeneratorService {
 	        if(c=='+') return 1;
 	        else if(c=='*') return 2;
 	        else if(c=='~') return 3;
-	        else if(c=='>') return 4;
+	        else if(c=='>') return 0;
 	        else if(c=='<') return 5;
 	        else return -1;
 	    }
@@ -188,19 +186,7 @@ public class GeneratorService {
 	                        postFixList.add(stack.pop()+"");
 	                    }
 	                }
-	            }else if(word=='>'){
-	                flag = false;
-	                /*while(!stack.isEmpty()){
-	                    if(stack.peek()=='('){
-	                        stack.pop();
-	                        break;
-	                    }else{
-	                        postFixList.add(stack.pop()+"");
-	                    }
-	                }*/
-	                stack.push(word);
-	                flag = false;
-	            }else if(word=='+' || word=='*' || word=='~'){
+	            }else if(word=='+' || word=='*' || word=='~'|| word=='>'){
 	                flag = false;
 	                if(stack.isEmpty()){
 	                    stack.push(word);
