@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Computational Mathematics</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/actions.js}"></script>
+</head>
+<body>
+	<h1>Truth tables generator</h1>
+	<div class="container container-padding50">
+    <form name="form1" action="#" onsubmit="required()" th:action="@{/index}" th:object="${mystatement}" method="post">
+        <p><input id="text1" type="text" th:field="*{content}" placeholder="Write a statement" class="js-userinput container-textinput" />
+        </p>
+        <div><input type="submit" value="Generate" /> 
+        <input type="reset" value="Reset" /></div>
+    </form>
+    
+    </div>
+    <p>Instructions:</p>
+    <p>
+    	The application receives a single input: the logical statement, for example "(p+q)*~(p*q)".<br>
+    	The valid (accepted) characters for the input are: 0, 1, a – z, +, *, ~, (, ), > and &lt;.<br>
+    	Values 0 and 1 represent the logical False and True, respectively.<br>
+    	Symbols +, *, ~, > and &lt;&gt; will represent the OR,AND, NOT, Conditional and Biconditional logical operators, respectively.<br>
+    	*No spaces are allowed.</p>
+</body>
+</html>
