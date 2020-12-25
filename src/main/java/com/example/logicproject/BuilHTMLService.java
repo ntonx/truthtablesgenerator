@@ -36,6 +36,7 @@ public class BuilHTMLService {
 	}
 	
 	public String getEnd(ArrayList<Integer> response) {
+		System.out.print(response);
 		String tautology = "";
 		String contingency = "";
 		String negation = "";
@@ -55,8 +56,12 @@ public class BuilHTMLService {
 			negation = "Yes";
 			contingency = "No";
 			satisfiable = "No";
+		}else if (response.contains(0)&&response.contains(1)) {
+			tautology = "No";
+			negation = "No";
+			contingency = "Yes";
+			satisfiable = "Yes";
 		}
-		
 		return "\r\n" + 
 				"              \r\n" + 
 				"            </tbody>\r\n" + 

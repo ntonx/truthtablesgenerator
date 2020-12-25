@@ -150,16 +150,12 @@ public class LogicController {
 	        aux2 = aux2+m6;
 //	        System.out.println();
 	    }      
-		page = page+aux2;
-		   
-		for(int i=0;i<(datos.size()*datos.size())-1;i++) {
+		page = page+aux2; 
+		
+		for(int i=0;i<Math.pow(2, datos.size());i++) {
 			response.add(res[i][datos.size()]);		
 		}
-		if(datos.size()==1) {
-			for(int i=0;i<=datos.size();i++) {
-				response.add(res[i][datos.size()]);
-			}
-		}	
+
 	  return page+htmlBuilder.getEnd(response);
 	}
 	
